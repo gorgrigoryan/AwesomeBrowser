@@ -24,9 +24,6 @@ class ViewController: UIViewController {
         urlTextField.delegate = self
         webView.navigationDelegate = self
         
-        
-        
-        
         let homePage = "https://www.apple.com/"
         let url = URL(string: homePage)
         let request = URLRequest(url: url!)
@@ -37,12 +34,16 @@ class ViewController: UIViewController {
     }
 
 
-    @IBAction func backButtonAction(_ sender: UIButton) {
-        
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        if webView.canGoBack {
+            webView.goBack()
+        }
     }
     
-    @IBAction func forwardButtonAction(_ sender: UIButton) {
-        
+    @IBAction func forwardButtonTapped(_ sender: UIButton) {
+        if webView.canGoForward {
+            webView.goForward()
+        }
     }
     
 }
@@ -62,5 +63,8 @@ extension ViewController: UITextFieldDelegate, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         urlTextField.text = webView.url?.absoluteString
+        
+        backButton.isEnabled = webView.canGoBack
+        forwardButton.isEnabled = webView.canGoForward
     }
 }
