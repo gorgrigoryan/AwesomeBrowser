@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         
         
         urlTextField.delegate = self
-        
+        webView.navigationDelegate = self
         
         
         
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController: UITextFieldDelegate {
+extension ViewController: UITextFieldDelegate, WKNavigationDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let urlString = textField.text!
         let url = URL(string: urlString)!
@@ -58,5 +58,9 @@ extension ViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         return true
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        urlTextField.text = webView.url?.absoluteString
     }
 }
